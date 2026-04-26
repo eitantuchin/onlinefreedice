@@ -1,0 +1,337 @@
+:root {
+  color-scheme: dark;
+  --bg: #081020;
+  --surface: #111827;
+  --surface-strong: #151f35;
+  --text: #f8fafc;
+  --muted: #a5b4fc;
+  --accent: #60a5fa;
+  --accent-strong: #38bdf8;
+  --border: rgba(148, 163, 184, 0.12);
+  --shadow: 0 24px 80px rgba(2, 10, 28, 0.35);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: radial-gradient(circle at top, rgba(56, 189, 248, 0.12), transparent 28%), linear-gradient(180deg, #0b1224 0%, #081020 100%);
+  color: var(--text);
+}
+
+body {
+  line-height: 1.6;
+}
+
+button {
+  font: inherit;
+}
+
+.page-shell {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 32px 24px 48px;
+}
+
+.hero-panel {
+  display: grid;
+  gap: 24px;
+  padding: 42px;
+  border: 1px solid var(--border);
+  background: rgba(15, 23, 42, 0.85);
+  border-radius: 28px;
+  box-shadow: var(--shadow);
+}
+
+.eyebrow {
+  display: inline-flex;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.78rem;
+  color: var(--accent);
+}
+
+.hero-panel h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  line-height: 1.05;
+}
+
+.hero-panel p {
+  max-width: 760px;
+  color: var(--muted);
+  margin: 0;
+  font-size: 1rem;
+}
+
+.content-grid {
+  display: grid;
+  gap: 28px;
+  margin-top: 32px;
+}
+
+.dice-card,
+.probability-card {
+  padding: 28px;
+  background: rgba(15, 23, 42, 0.92);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  box-shadow: var(--shadow);
+}
+
+.dice-card h2,
+.probability-card h2 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 1.75rem;
+}
+
+.dice-card p,
+.probability-card p {
+  color: var(--muted);
+  margin: 0;
+}
+
+.dice-hero {
+  margin-bottom: 24px;
+}
+
+.dice-settings {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(2, minmax(140px, 1fr));
+  margin-bottom: 24px;
+}
+
+.dice-settings label {
+  display: grid;
+  gap: 10px;
+  color: var(--text);
+  font-size: 0.96rem;
+}
+
+.dice-settings select {
+  width: 100%;
+  border-radius: 18px;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: rgba(15, 23, 42, 0.96);
+  color: var(--text);
+  padding: 12px 14px;
+  font-size: 1rem;
+}
+
+.dice-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 16px;
+  align-items: center;
+  justify-items: center;
+  margin-bottom: 24px;
+}
+
+.die-cell {
+  width: 120px;
+  height: 120px;
+}
+
+.die-cell .die-face {
+  width: 100%;
+  height: 100%;
+}
+
+.die-cell .dot {
+  width: 14px;
+  height: 14px;
+}
+
+.die-number {
+  display: grid;
+  place-items: center;
+  color: var(--text);
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.die-frame {
+  width: 240px;
+  height: 240px;
+  border: none;
+  background: linear-gradient(145deg, rgba(96, 165, 250, 0.12), rgba(56, 189, 248, 0.06));
+  border: 2px solid rgba(96, 165, 250, 0.22);
+  border-radius: 36px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  margin: 0 auto;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.die-frame:hover {
+  transform: translateY(-4px);
+  border-color: rgba(56, 189, 248, 0.44);
+}
+
+.die-frame:disabled {
+  opacity: 0.88;
+  cursor: default;
+}
+
+.die-face {
+  width: 180px;
+  height: 180px;
+  position: relative;
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.06));
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04), 0 24px 54px rgba(0, 0, 0, 0.18);
+}
+
+.die-face.rolling {
+  animation: spin-die 0.75s ease-in-out;
+}
+
+.dot {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  opacity: 0;
+  background: #dbeafe;
+  box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.08);
+  transform: translate(-50%, -50%) scale(0.84);
+  transition: opacity 0.18s ease, transform 0.2s ease;
+}
+
+.dot.active {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.roll-button {
+  margin: 26px auto 0;
+  display: block;
+  border: none;
+  padding: 16px 28px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  box-shadow: 0 18px 40px rgba(56, 189, 248, 0.24);
+  transition: transform 0.22s ease, opacity 0.22s ease;
+}
+
+.roll-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.roll-button:disabled {
+  opacity: 0.78;
+  cursor: default;
+}
+
+.roll-summary {
+  margin-top: 22px;
+  text-align: center;
+  color: var(--muted);
+}
+
+.roll-summary .hint {
+  margin-top: 12px;
+  font-size: 0.95rem;
+}
+
+.probability-grid {
+  display: grid;
+  gap: 18px;
+  margin-top: 22px;
+}
+
+.probability-grid div {
+  padding: 18px;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.probability-grid h3 {
+  margin: 0 0 10px;
+  font-size: 1.1rem;
+}
+
+.probability-grid p {
+  margin: 0;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  margin-top: 24px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 320px;
+}
+
+thead th {
+  text-align: left;
+  padding: 14px 12px;
+  color: #e0e7ff;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+}
+
+tbody td {
+  padding: 14px 12px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+  color: var(--muted);
+}
+
+.site-footer {
+  margin-top: 32px;
+  padding: 18px 16px;
+  text-align: center;
+  color: var(--muted);
+}
+
+@media (min-width: 840px) {
+  .content-grid {
+    grid-template-columns: 1.05fr 0.95fr;
+  }
+
+  .probability-card {
+    min-height: 100%;
+  }
+}
+
+@media (max-width: 720px) {
+  .page-shell {
+    padding: 24px 16px 32px;
+  }
+
+  .die-frame {
+    width: 100%;
+    max-width: 300px;
+    height: 300px;
+  }
+}
+
+@keyframes spin-die {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(540deg) scale(1.04);
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+}
