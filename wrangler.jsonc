@@ -1,4 +1,8 @@
 {
   "name": "onlinefreedice",
-  "compatibility_date": "2026-04-26"
+  "compatibility_date": "2026-04-26",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS"
+  }
 }
