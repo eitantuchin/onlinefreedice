@@ -1,0 +1,5 @@
+{
+    "name": "wrangler-worker",
+    "compatibility_date": "2026-04-26",
+    "main": "src/main.jsx"
+}
