@@ -1,5 +1,5 @@
 {
-    "name": "wrangler-worker",
+    "name": "onlinefreedice",
     "compatibility_date": "2026-04-26",
     "main": "src/main.jsx"
 }
