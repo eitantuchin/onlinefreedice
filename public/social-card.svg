@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Online Free Dice social preview">
+  <defs>
+    <linearGradient id="bg" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#14171d" />
+      <stop offset="100%" stop-color="#0f1115" />
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="48%" r="55%">
+      <stop offset="0%" stop-color="#ffb36b" stop-opacity="0.38" />
+      <stop offset="100%" stop-color="#ff6b4a" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="die" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#fffaf3" />
+      <stop offset="100%" stop-color="#ecd4bc" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect width="1200" height="630" fill="url(#glow)" />
+  <ellipse cx="700" cy="420" rx="360" ry="130" fill="#201612" />
+  <ellipse cx="700" cy="430" rx="320" ry="100" fill="#3a291f" />
+
+  <g transform="translate(760 238) rotate(-18)">
+    <rect x="-92" y="-92" width="184" height="184" rx="34" fill="url(#die)" />
+    <circle cx="-42" cy="-42" r="14" fill="#5c2f1e" />
+    <circle cx="0" cy="0" r="14" fill="#5c2f1e" />
+    <circle cx="42" cy="42" r="14" fill="#5c2f1e" />
+    <circle cx="42" cy="-42" r="14" fill="#5c2f1e" />
+    <circle cx="-42" cy="42" r="14" fill="#5c2f1e" />
+  </g>
+
+  <g transform="translate(930 320) rotate(16)">
+    <polygon points="0,-92 88,0 0,92 -88,0" fill="#ffd27f" />
+    <polygon points="0,-92 48,0 0,92 -48,0" fill="none" stroke="#4b2d1f" stroke-opacity="0.22" stroke-width="8" />
+  </g>
+
+  <g transform="translate(585 340) rotate(-8)">
+    <polygon points="0,-92 88,-30 54,82 -54,82 -88,-30" fill="#c4b5fd" />
+    <path d="M0 -92 L0 82 M-88 -30 L54 82 M88 -30 L-54 82" fill="none" stroke="#4b2d1f" stroke-opacity="0.22" stroke-width="8" />
+  </g>
+
+  <text x="84" y="148" fill="#ffd8bc" font-family="Avenir Next, Trebuchet MS, sans-serif" font-size="28" letter-spacing="6">ONLINE FREE DICE</text>
+  <text x="84" y="270" fill="#f7f1e7" font-family="Georgia, Times New Roman, serif" font-size="84" font-weight="700">
+    Dice Roller
+  </text>
+  <text x="84" y="352" fill="#d0c4b3" font-family="Avenir Next, Trebuchet MS, sans-serif" font-size="34">
+    Roll d4, d6, d8, d10, d12, and d20 dice online in seconds.
+  </text>
+  <text x="84" y="405" fill="#d0c4b3" font-family="Avenir Next, Trebuchet MS, sans-serif" font-size="34">
+    Fast random results, totals, and probability help for games and study.
+  </text>
+
+  <g transform="translate(84 470)">
+    <rect width="238" height="58" rx="29" fill="#ff8d59" />
+    <text x="36" y="39" fill="#fffaf3" font-family="Avenir Next, Trebuchet MS, sans-serif" font-size="28" font-weight="700">
+      onlinefreedice.com
+    </text>
+  </g>
+</svg>

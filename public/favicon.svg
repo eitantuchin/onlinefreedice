@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Online Free Dice favicon">
+  <defs>
+    <linearGradient id="bg" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffb36b" />
+      <stop offset="100%" stop-color="#ff6b4a" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="#1f1511" />
+  <rect x="12" y="12" width="40" height="40" rx="12" fill="url(#bg)" transform="rotate(-8 32 32)" />
+  <circle cx="24" cy="24" r="3.5" fill="#fff8ef" />
+  <circle cx="40" cy="24" r="3.5" fill="#fff8ef" />
+  <circle cx="32" cy="32" r="3.5" fill="#fff8ef" />
+  <circle cx="24" cy="40" r="3.5" fill="#fff8ef" />
+  <circle cx="40" cy="40" r="3.5" fill="#fff8ef" />
+</svg>

@@ -20,13 +20,15 @@ const dotPositions = [
 ];
 
 const sideOptions = [4, 6, 8, 10, 12, 20];
+const updatedDate = '2026-04-27';
+const updatedLabel = 'April 27, 2026';
 
 function App() {
   const [diceCount, setDiceCount] = useState(1);
   const [sides, setSides] = useState(6);
   const [values, setValues] = useState([1]);
   const [rolling, setRolling] = useState(false);
-  const [message, setMessage] = useState('Choose the number of dice, select the sides, then roll for your result.');
+  const [message, setMessage] = useState('Choose the number of dice, pick the die type, and roll for your result.');
 
   const activeDotSets = useMemo(
     () => values.map((value) => (sides === 6 ? dotLayout[value] ?? [] : [])),
@@ -40,29 +42,26 @@ function App() {
   const handleDiceCountChange = (event) => {
     const nextCount = Number(event.target.value);
     setDiceCount(nextCount);
-    setValues((current) => {
-      return Array.from({ length: nextCount }, (_, index) => current[index] ?? 1);
-    });
+    setValues((current) => Array.from({ length: nextCount }, (_, index) => current[index] ?? 1));
   };
 
-  const handleSidesChange = (event) => {
-    const nextSides = Number(event.target.value);
+  const handleSidesChange = (nextValue) => {
+    const nextSides = Number(nextValue);
     setSides(nextSides);
     setValues((current) => current.map((value) => Math.min(value, nextSides) || 1));
   };
 
   const rollDice = () => {
     if (rolling) return;
+
     setRolling(true);
-    setMessage('Rolling the free online dice...');
+    setMessage('Rolling the dice...');
 
     const nextValues = Array.from({ length: diceCount }, () => Math.floor(Math.random() * sides) + 1);
-    setTimeout(() => {
+    window.setTimeout(() => {
       setValues(nextValues);
       setRolling(false);
-      setMessage(
-        `Rolled ${diceCount} ${sides}-sided dice: ${nextValues.join(', ')}. Each die has a 1 in ${sides} chance per face.`
-      );
+      setMessage(`Rolled ${diceCount} d${sides}: ${nextValues.join(', ')}. Each face has a 1 in ${sides} chance on every individual die.`);
     }, 750);
   };
 
@@ -70,53 +69,73 @@ function App() {
     <div className="page-shell">
       <header className="hero-panel">
         <div className="hero-copy">
+          <nav className="page-nav" aria-label="Page sections">
+            <a href="#roller">Roller</a>
+            <a href="#probability">Odds</a>
+            <a href="#guide">Guide</a>
+            <a href="#faq">FAQ</a>
+          </nav>
+
           <span className="eyebrow">Free Dice Roller</span>
-          <h1>Fast, polished dice rolls for games, study, and split-second decisions.</h1>
+          <h1>Free online dice roller for d4, d6, d8, d10, d12, and d20 rolls.</h1>
           <p>
-            Roll up to 10 dice, switch between classic and RPG die types, and see the outcome instantly in a layout that feels more like a real play surface than a form.
+            Roll up to 10 virtual dice, see instant results, and use the page for tabletop RPGs, board games, classroom probability, or quick random decisions.
           </p>
+
           <div className="hero-actions">
             <button className="roll-button hero-roll" onClick={rollDice} disabled={rolling}>
               {rolling ? 'Rolling...' : 'Roll Now'}
             </button>
-            <div className="hero-note">Tap any die to reroll the full set.</div>
+            <div className="hero-note">
+              Updated <time dateTime={updatedDate}>{updatedLabel}</time>
+            </div>
           </div>
         </div>
 
-        <div className="hero-stats" aria-label="Current roll overview">
-          <div className="stat-card">
-            <span>Total</span>
-            <strong>{total}</strong>
-          </div>
-          <div className="stat-card">
-            <span>Average</span>
-            <strong>{average.toFixed(1)}</strong>
-          </div>
-          <div className="stat-card">
-            <span>Max Roll</span>
-            <strong>{highestRoll}</strong>
-          </div>
-          <div className="stat-card">
-            <span>Outcomes</span>
-            <strong>{possibleOutcomes.toLocaleString()}</strong>
+        <div className="hero-side">
+          <img
+            className="hero-preview-image"
+            src="/social-card.svg"
+            alt="Preview artwork for the online dice roller with polyhedral dice"
+            width="720"
+            height="480"
+          />
+
+          <div className="hero-stats" aria-label="Current roll overview">
+            <div className="stat-card">
+              <span>Total</span>
+              <strong>{total}</strong>
+            </div>
+            <div className="stat-card">
+              <span>Average</span>
+              <strong>{average.toFixed(1)}</strong>
+            </div>
+            <div className="stat-card">
+              <span>Max Roll</span>
+              <strong>{highestRoll}</strong>
+            </div>
+            <div className="stat-card">
+              <span>Outcomes</span>
+              <strong>{possibleOutcomes.toLocaleString()}</strong>
+            </div>
           </div>
         </div>
       </header>
 
       <main className="content-grid">
-        <section className="dice-card" aria-label="dice roller">
+        <section className="dice-card" id="roller" aria-labelledby="roller-heading">
           <div className="section-heading">
             <div>
-              <span className="section-kicker">Roll Setup</span>
-              <h2>Customize the table</h2>
+              <span className="section-kicker">Roll Table</span>
+              <h2 id="roller-heading">Customize the throw</h2>
             </div>
-            <p>Dial in the exact roll, then throw the whole set with one click.</p>
+            <p>Choose your dice, hit roll, and get a clean 2D result instantly.</p>
           </div>
 
           <div className="dice-settings">
             <label>
               Dice count
-              <select value={diceCount} onChange={handleDiceCountChange}>
+              <select value={diceCount} onChange={handleDiceCountChange} disabled={rolling}>
                 {Array.from({ length: 10 }, (_, index) => index + 1).map((count) => (
                   <option key={count} value={count}>
                     {count}
@@ -133,8 +152,9 @@ function App() {
                     key={side}
                     type="button"
                     className={`side-chip ${sides === side ? 'active' : ''}`}
-                    onClick={() => handleSidesChange({ target: { value: side } })}
+                    onClick={() => handleSidesChange(side)}
                     aria-pressed={sides === side}
+                    disabled={rolling}
                   >
                     d{side}
                   </button>
@@ -180,7 +200,7 @@ function App() {
             ))}
           </div>
 
-          <button className="roll-button" onClick={rollDice} disabled={rolling}>
+          <button className="roll-button table-roll" onClick={rollDice} disabled={rolling}>
             {rolling ? 'Rolling...' : 'Roll Dice'}
           </button>
 
@@ -192,7 +212,7 @@ function App() {
           </div>
         </section>
 
-        <section className="probability-card" aria-labelledby="probability-heading">
+        <section className="probability-card" id="probability" aria-labelledby="probability-heading">
           <div className="section-heading">
             <div>
               <span className="section-kicker">Odds Guide</span>
@@ -202,24 +222,24 @@ function App() {
           </div>
 
           <div className="probability-grid">
-            <div>
+            <article>
               <h3>Multiple dice</h3>
               <p>
-                Every die roll is independent, so adding more dice increases the number of possible combined outcomes without changing each face's individual fairness.
+                Every die roll is independent, so adding more dice increases the number of possible combined outcomes without changing each face&apos;s individual fairness.
               </p>
-            </div>
-            <div>
+            </article>
+            <article>
               <h3>Different die types</h3>
               <p>
                 A d4 hits each face 25% of the time, while a d20 lands on each number 5% of the time. Bigger dice give you finer-grained results.
               </p>
-            </div>
-            <div>
+            </article>
+            <article>
               <h3>Useful at the table</h3>
               <p>
                 Use the totals, averages, and face odds to sanity-check encounters, classroom examples, or quick rules calls during a session.
               </p>
-            </div>
+            </article>
           </div>
 
           <div className="table-wrapper">
@@ -232,7 +252,7 @@ function App() {
                 </tr>
               </thead>
               <tbody>
-                {[4, 6, 8, 10, 12, 20].map((side) => (
+                {sideOptions.map((side) => (
                   <tr key={side}>
                     <td>d{side}</td>
                     <td>1 in {side}</td>
@@ -244,13 +264,13 @@ function App() {
           </div>
         </section>
 
-        <section className="seo-copy" aria-labelledby="guide-heading">
+        <section className="seo-copy" id="guide" aria-labelledby="guide-heading">
           <div className="section-heading">
             <div>
               <span className="section-kicker">Dice Guide</span>
               <h2 id="guide-heading">Free online dice roller for tabletop games, classrooms, and quick choices</h2>
             </div>
-            <p>Static, readable copy helps people and search engines understand exactly what this page is for.</p>
+            <p>The report called for clearer heading structure, crawlable copy, and useful links, so this section does that work directly.</p>
           </div>
 
           <div className="seo-grid">
@@ -275,15 +295,26 @@ function App() {
               </p>
             </article>
           </div>
+
+          <div className="resource-links" aria-label="Useful dice resources">
+            <a href="#probability">Jump to the probability table</a>
+            <a href="#faq">Read the dice roller FAQ</a>
+            <a href="https://en.wikipedia.org/wiki/Dice_notation" target="_blank" rel="noreferrer">
+              Learn the basics of dice notation
+            </a>
+            <a href="https://en.wikipedia.org/wiki/Expected_value" target="_blank" rel="noreferrer">
+              Review expected value in probability
+            </a>
+          </div>
         </section>
 
-        <section className="faq-card" aria-labelledby="faq-heading">
+        <section className="faq-card" id="faq" aria-labelledby="faq-heading">
           <div className="section-heading">
             <div>
               <span className="section-kicker">FAQ</span>
               <h2 id="faq-heading">Questions people ask about rolling dice online</h2>
             </div>
-            <p>These answers also reinforce the page topic with clean semantic structure.</p>
+            <p>These answers reinforce the page topic for users and search engines without padding the page with filler.</p>
           </div>
 
           <div className="faq-list">
@@ -312,7 +343,14 @@ function App() {
       </main>
 
       <footer className="site-footer">
-        <p>Free online dice roller for tabletop gaming, probability practice, and fast digital die rolls.</p>
+        <p>
+          Free online dice roller for tabletop gaming, probability practice, and fast digital die rolls. Prefer a permanent link? Visit{' '}
+          <a href="https://onlinefreedice.com" target="_blank" rel="noreferrer">
+            onlinefreedice.com
+          </a>
+          .
+        </p>
+        <p className="rights-note">&copy; 2026 Online Free Dice. All rights reserved.</p>
       </footer>
     </div>
   );
