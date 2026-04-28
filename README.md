@@ -2,6 +2,8 @@
 
 A simple React website for rolling a die online with animation, visual interaction, and probability insights.
 
+Website: https://onlinefreedice.com/
+
 ## Features
 
 - Click the visual die or the button to roll
